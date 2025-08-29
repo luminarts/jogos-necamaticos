@@ -84,7 +84,7 @@ export default function Equacao() {
 
   return (
   <div className="flex flex-col justify-center items-center">
-    <div className="h-screen flex flex-col items-center justify-center">
+    <div className="h-screen flex flex-col items-center justify-center pb-100 sm:pb-0">
       {showScoreDiv && 
       <div className="border-2 border-black mt-5 flex-end p-4 flex flex-col justify-center items-center">
         <p>Score</p>
@@ -92,7 +92,7 @@ export default function Equacao() {
       </div>}
       <CountdownTimer className="flex justify-center items-center flex-col" onTimerStart={handleTimerStart} scoreValue={scoreValue}></CountdownTimer>
       <div>
-        {showProblemDiv && <div className="text-6xl text-black flex flex-row">
+        {showProblemDiv && <div className="text-4xl sm:text-6xl text-black flex flex-row">
           <div className="flex flex-row mx-5">
             <p>
               {randNum1} 
@@ -100,7 +100,7 @@ export default function Equacao() {
             <p className="mx-4">
               {randOperator1}
             </p>
-            <input className="border-2 border-gray-500 w-30 mx-2"
+            <input className="border-2 border-gray-500 w-20 sm:w-30 mx-2"
             type="number"
             ref={inputRef}
             />
