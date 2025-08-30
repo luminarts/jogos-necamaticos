@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 export default function CountdownTimer({className = "", onTimerStart, scoreValue}) {
   
-  const [timeLeft, setTimeLeft] = useState(2 * 60);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
   const delay = ms => new Promise(res => setTimeout(res, ms));
