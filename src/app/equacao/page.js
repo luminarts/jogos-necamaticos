@@ -60,8 +60,8 @@ export default function Equacao() {
     inputRef.current.value = '';
   }
 
-  var randNum1 = getRandomInteger(1, 100);
-  var randResult = getRandomInteger(1, 100);
+  var randNum1 = getRandomInteger(2, 100);
+  var randResult = getRandomInteger(2, 100);
   
   const operatorsArray = ['+', '-', '*', '/'];
   var randIndex = getRandomInteger(0, 3);
@@ -70,11 +70,11 @@ export default function Equacao() {
 
   if (randOperator1 == '*') {
     while(randResult % randNum1 != 0) {
-      randNum1 = getRandomInteger(1, 100);
+      randNum1 = getRandomInteger(2, 100);
     }
   } else if (randOperator1 == '/') {
     while(randNum1 % randResult != 0) {
-      randNum1 = getRandomInteger(1, 100);
+      randNum1 = getRandomInteger(2, 100);
     }
   }
 
