@@ -7,11 +7,47 @@ import { useState, useRef } from "react";
 - Apertar enter para dar submit
 
 */
+
+
+/**
+ * Pega um número aleatório entre dois parametros definidos
+ * @param {*} min - limite inferior (inclusive)
+ * @param {*} max - limite superior (inclusive)
+ * @returns número aleatório entre min e max
+ */
 function getRandomInteger(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function generateRandomEquation(numOfTerms, inputSpaces) {
+  
+  const operatorsArray = ['+', '-', '*', '/'];
+  
+  equation = [];
+  var counter = inputSpaces;
+  var randBlankIndex = getRandomInteger(1, inputSpaces);
+  
+  for (var i = 1; i < numOfTerms; i++) {
+
+    var randOperatorIndex = getRandomInteger(0, 3); 
+    var randOperator = operatorsArray[randOperatorIndex];
+
+    if (i < inputSpaces) {
+      var randNumber = getRandomInteger(2, 100);
+
+
+      
+      equation.push(randNumber);
+      equation.push(randOperator);
+    } else {
+      
+    }
+
+  }
+}
+
 
 function checkAnswer(num1, num2, result, operator) {
   if (operator == '+') {
@@ -60,8 +96,8 @@ export default function Equacao() {
     inputRef.current.value = '';
   }
 
-  var randNum1 = getRandomInteger(1, 100);
-  var randResult = getRandomInteger(1, 100);
+  var randNum1 = getRandomInteger(2, 100);
+  var randResult = getRandomInteger(2, 100);
   
   const operatorsArray = ['+', '-', '*', '/'];
   var randIndex = getRandomInteger(0, 3);
@@ -70,11 +106,11 @@ export default function Equacao() {
 
   if (randOperator1 == '*') {
     while(randResult % randNum1 != 0) {
-      randNum1 = getRandomInteger(1, 100);
+      randNum1 = getRandomInteger(2, 100);
     }
   } else if (randOperator1 == '/') {
     while(randNum1 % randResult != 0) {
-      randNum1 = getRandomInteger(1, 100);
+      randNum1 = getRandomInteger(2, 100);
     }
   }
 
