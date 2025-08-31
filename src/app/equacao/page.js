@@ -69,11 +69,11 @@ export default function Equacao() {
   var randOperator1 = operatorsArray[randIndex];
 
   if (randOperator1 == '*') {
-    while(randResult % randNum1 != 0) {
+    while(randResult % randNum1 != 0 && randResult == randNum1) {
       randNum1 = getRandomInteger(2, 100);
     }
   } else if (randOperator1 == '/') {
-    while(randNum1 % randResult != 0) {
+    while(randNum1 % randResult != 0 && randResult == randNum1) {
       randNum1 = getRandomInteger(2, 100);
     }
   }
