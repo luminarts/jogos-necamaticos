@@ -27,7 +27,10 @@ function generateRandomEquation(numOfTerms, inputSpaces) {
   
   equation = [];
   var counter = inputSpaces;
-  var randBlankIndex = getRandomInteger(1, inputSpaces);
+  var randBlankIndex = new Array(2*numOfTerms - 1).fill(0);
+  for (var i = 0; i < inputSpaces; i++) {
+    randBlankIndex.push(getRandomInteger(0, numOfTerms - 1));
+  }
   
   for (var i = 1; i < numOfTerms; i++) {
 
