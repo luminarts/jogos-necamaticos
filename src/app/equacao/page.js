@@ -25,9 +25,11 @@ function generateRandomEquation(numOfTerms, inputSpaces) {
   
   const operatorsArray = ['+', '-', '*', '/'];
   
-  equation = [];
-  var counter = inputSpaces;
-  var randBlankIndex = new Array(2*numOfTerms - 1).fill(0);
+  equation = new Array(2*numOfTerms + 1).fill(0);
+
+  // Espaços para input do usuário
+  var randBlankIndex = [];
+  
   for (var i = 0; i < inputSpaces; i++) {
     randBlankIndex.push(getRandomInteger(0, numOfTerms - 1));
   }
