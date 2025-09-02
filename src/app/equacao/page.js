@@ -30,7 +30,6 @@ function generateRandomEquation(terms, blanks) {
   var blanksPos = new Array(blanks);
 
   // Buscando quais vão ser os indices de blanks
-  
   for (var i = 0; i < blanks; i++) {
     var randAux = getRandomInteger(0, terms - 1) * 2;
     while (blanksPos.includes(randAux)) {
@@ -39,24 +38,57 @@ function generateRandomEquation(terms, blanks) {
     blanksPos[i] = randAux;
   }
 
+  // gerando equação
   for (var i = 0; i < 2*terms + 1; i+=2) {
-    var num = getRandomInteger(2, 10);
+    var num = getRandomInteger(2, 9);
     var op;
+    var result = 0;
+
     if (i <= 1) {
       op = operatorsArray[getRandomInteger(0, 2)];
     } else {
       op = operatorsArray[getRandomInteger(0, 1)];
     }
     
-    if (i == 2*terms && !blanksPos.includes(i)) {
+    if (i == 2*terms) {
       equation[i - 1] = '=';
-      equation[i] = num;
-    } else {
+
+      // calculate result
+      result = equation[0];
+      for (var j = 1; j < equation.length - 2; j+=2) {
+        switch (equation[j]) {
+          case "+":
+            result += equation[j + 1];
+            break;
+          case "-":
+            result -= equation[j + 1];
+            break;
+          case "*":
+            result *= equation[j + 1];
+            break;
+          default:
+            console.log("fudeu");
+        }
+      }
+      console.log("Result:" + result);
+      equation[i] = result;
+      console.log("equation before: " + equation);
       
-      equation[i] = blanksPos.includes(i)? '_' : num;
+
+    } else {
+      console.log("equation middle: " + equation);
+      
+      equation[i] = num;
       equation[i + 1] = op;
     }
   }
+
+  for (var i = 0; i < blanks; i++) {
+    equation[blanksPos[i]] = '_';
+  }
+
+  console.log("equation after: " + equation);
+  console.log("blanksPos: " + blanksPos);
 
   return [equation, blanksPos];
 }
@@ -88,7 +120,7 @@ function checkAnswer(equation) {
 
 export default function Equacao() {
   // Variables and states
-  var terms = 2, blanks = 1, levels = 1, eq, blPos;
+  var terms = 2, blanks = 1, eq, blPos;
   const [showProblem, setShowProblem] = useState(false);
   const [equation, setEquation] = useState([]);
   const [equationText, setEquationText] = useState([]);
