@@ -5,8 +5,7 @@ import { useState, useEffect } from "react";
 
 
 /* Coisas a fazer ainda:
-  -
-  - checar valor do equation
+  - colocar sempre multiplicação no primeiro depois da fase 10
 */
 
 
