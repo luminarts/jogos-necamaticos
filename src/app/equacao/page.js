@@ -169,7 +169,10 @@ export default function Equacao() {
               className="border-2 border-black p-4 m-5 hover:bg-gray-200"
               onClick={handleClearPress}
               >Clear</button>  
-              <button className="border-2 border-black p-4 m-5 hover:bg-green-200">Submit</button>
+              <button 
+              className="border-2 border-black p-4 m-5 hover:bg-green-200"
+              onClick={handleSubmitPress}
+              >Submit</button>
             </div> 
             
           </div>}
