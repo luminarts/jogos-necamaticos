@@ -67,16 +67,12 @@ function generateRandomEquation(terms, blanks) {
             result *= equation[j + 1];
             break;
           default:
-            console.log("fudeu");
         }
       }
-      console.log("Result:" + result);
       equation[i] = result;
-      console.log("equation before: " + equation);
       
 
     } else {
-      console.log("equation middle: " + equation);
       
       equation[i] = num;
       equation[i + 1] = op;
@@ -86,9 +82,6 @@ function generateRandomEquation(terms, blanks) {
   for (var i = 0; i < blanks; i++) {
     equation[blanksPos[i]] = '_';
   }
-
-  console.log("equation after: " + equation);
-  console.log("blanksPos: " + blanksPos);
 
   return [equation, blanksPos];
 }
@@ -109,11 +102,8 @@ function checkAnswer(equation) {
         userResult *= equation[i + 1];
         break;
       default:
-        console.log("fudeu");
     }
   }
-
-  console.log("User: " + userResult);
 
   return Math.abs(expectedResult - userResult) <= 2;
 }
@@ -148,7 +138,6 @@ export default function Equacao() {
     const updatedEquation = [...equation];
   
     updatedEquation[firstBlank] = toggleMinus? -value : value;
-    console.log(updatedEquation);
 
     setEquation(updatedEquation);
     
