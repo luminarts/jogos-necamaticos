@@ -2,9 +2,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function CountdownTimer({className = "", onTimerStart, scoreValue}) {
+export default function CountdownTimer({className = "", onTimerStart, level}) {
   
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(5* 60);
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -18,8 +18,14 @@ export default function CountdownTimer({className = "", onTimerStart, scoreValue
     if (!isActive) {
       return;
     } else if (timeLeft <= 0) {
-      console.log("scoreValue: ", scoreValue);
-      alert('Parabéns, você conseguiu ' + scoreValue + ' pontos!');
+      console.log("level: ", level);
+      if (level >= 20) {
+        alert('MEU DEUS!!!! VOCÊ CHEGOU NO NÍVEL ' + level + '!!! VOCÊ É UMA DEUSA, VOU TE DAR UM PUTA BEIJO!!!');
+      } else if (level <= 12) {
+        alert('Ainda falta um pouco! Você chegou no nível ' + level + '. Continue tentando!');
+      } else {
+        alert('Parabéns, você está na faixa esperada! Você chegou no nível ' + level + '! Mas ainda da pra ir um pouco além, né?')
+      }
       waitToLeave()
       return;
     }
@@ -29,7 +35,7 @@ export default function CountdownTimer({className = "", onTimerStart, scoreValue
     }, 1000)
 
     return () => clearInterval(intervalId);
-  }, [isActive, timeLeft, scoreValue]);
+  }, [isActive, timeLeft, level]);
 
   const handleStart = () => {
     setIsActive(true);
