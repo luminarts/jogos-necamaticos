@@ -189,7 +189,7 @@ export default function Equacao() {
 
   return(
     <div className="flex flex-col justify-center items-center">
-      <div className="h-screen flex flex-col justify-center items-center pb-100 sm:pb-0">
+      <div className="h-screen flex flex-col justify-center items-center pb-50 sm:pb-0">
           <div className="border-2 border-black p-4">
             Level {level}
           </div>
