@@ -1,7 +1,7 @@
 "use client"
 import CountdownTimer from "@/app/client_components/countdownTimer";
-import TecladoButton from "../client_components/tecladoButton";
-import { useState, useRef, useEffect } from "react";
+import TecladoButton from "../client_components/TecladoButton";
+import { useState, useEffect } from "react";
 
 
 /* Coisas a fazer ainda:
@@ -41,7 +41,12 @@ function generateRandomEquation(terms, blanks) {
 
   for (var i = 0; i < 2*terms + 1; i+=2) {
     var num = getRandomInteger(2, 10);
-    var op = operatorsArray[getRandomInteger(0, 2)];
+    var op;
+    if (i <= 1) {
+      op = operatorsArray[getRandomInteger(0, 2)];
+    } else {
+      op = operatorsArray[getRandomInteger(0, 1)];
+    }
     
     if (i == 2*terms && !blanksPos.includes(i)) {
       equation[i - 1] = '=';
@@ -60,18 +65,25 @@ function generateRandomEquation(terms, blanks) {
 function checkAnswer(equation) {
   var expectedResult = equation[equation.length - 1];
   var userResult = equation[0];
-
-  for (var i = 1; i < equation.length - 2; i++) {
+  for (var i = 1; i < equation.length - 2; i+=2) {
     switch (equation[i]) {
-      case '+':
+      case "+":
         userResult += equation[i + 1];
-      case '-':
+        break;
+      case "-":
         userResult -= equation[i + 1];
-      case '*':
+        break;
+      case "*":
         userResult *= equation[i + 1];
+        break;
+      default:
+        console.log("fudeu");
     }
-    return expectedResult == userResult;
   }
+
+  console.log("User: " + userResult);
+
+  return Math.abs(expectedResult - userResult) <= 2;
 }
 
 export default function Equacao() {
@@ -81,7 +93,8 @@ export default function Equacao() {
   const [equation, setEquation] = useState([]);
   const [equationText, setEquationText] = useState([]);
   const [blanksPos, setBlanksPos] = useState([]);
-
+  const [level, setLevel] = useState(1);
+  const [toggleMinus, setToggleMinus] = useState(false);
 
   // Action Handles
 
@@ -101,7 +114,9 @@ export default function Equacao() {
 
     const firstBlank = equation.indexOf('_');
     const updatedEquation = [...equation];
-    updatedEquation[firstBlank] = value;
+  
+    updatedEquation[firstBlank] = toggleMinus? -value : value;
+    console.log(updatedEquation);
 
     setEquation(updatedEquation);
     
@@ -121,32 +136,44 @@ export default function Equacao() {
   }
 
   const handleSubmitPress = () => {
+    setToggleMinus(false);
     if (checkAnswer(equation)) {
-      levels++;
+      setLevel(level + 1);
     }
+  }
 
-    if (levels > 5) {
-      terms = 3;
-    }
-    if (levels > 7) {
-      blanks = 2;
-    }
+  const handleToggleMinus = () => {
+    setToggleMinus(!toggleMinus);
   }
 
   // Effect Handles
 
+  // Every level change
   useEffect(() => {
-
-  }, [equation])
+    
+    if (level > 5) {
+      terms = 3;
+    }
+    if (level > 7) {
+      blanks = 2;
+    }
+    
+    
+    [eq, blPos] = generateRandomEquation(terms, blanks); 
+    
+    setBlanksPos(blPos);
+    setEquation(eq);
+    setEquationText(eq.join(' '));
+  }, [level])
 
 
   return(
     <div className="flex flex-col justify-center items-center">
       <div className="h-screen flex flex-col justify-center items-center pb-100 sm:pb-0">
           <div className="border-2 border-black p-4">
-            Level {levels}
+            Level {level}
           </div>
-          <CountdownTimer className="flex flex-col justify-center items-center" onTimerStart={handleProblemStart} level={levels}></CountdownTimer>
+          <CountdownTimer className="flex flex-col justify-center items-center" onTimerStart={handleProblemStart} level={level}></CountdownTimer>
           {showProblem &&
           <div className="flex flex-col justify-center items-center">
             <div className="text-2xl">
@@ -162,8 +189,10 @@ export default function Equacao() {
               <TecladoButton value={7} handleNumberPress={handleNumberPress}>7</TecladoButton>
               <TecladoButton value={8} handleNumberPress={handleNumberPress}>8</TecladoButton>
               <TecladoButton value={9} handleNumberPress={handleNumberPress}>9</TecladoButton>
+              <button  onClick={handleToggleMinus} className={`${toggleMinus? 'bg-black text-white' : 'bg-gray-100'} border-2 border-black rounded p-3 hover:bg-black hover:text-white`}>-</button>
+              <TecladoButton value={0} handleNumberPress={handleNumberPress}>0</TecladoButton> 
+              <button className="bg-gray-100 border-2 border-black rounded p-3 hover:bg-black hover:text-white">.</button>
             </div>
-            <TecladoButton value={0}>0</TecladoButton> 
             <div className="flex flex-row justify-center items-center">
               <button
               className="border-2 border-black p-4 m-5 hover:bg-gray-200"
