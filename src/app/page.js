@@ -1,4 +1,4 @@
-import RoutingButton from "./client_components/routingButton";
+import RoutingButton from "./client_components/RoutingButton";
 
 export default function Home() {
   return (
@@ -8,11 +8,14 @@ export default function Home() {
     </div>
     <div className="flex flex-row">
       <div className="border-2 border-black-500 p-4 m-4">
-        <RoutingButton href={'/equacao'} className="border-2 border-black-500 rounded-lg m-4 p-2 hover:text-white transition hover:bg-black hover:scale-110">
+        <RoutingButton href={'/equacao'}>
           Complete a equação!
         </RoutingButton>
-        <RoutingButton href={'/pisca'} className="border-2 border-black-500 rounded-lg m-4 p-2 hover:text-white transition hover:bg-black hover:scale-110">
+        <RoutingButton href={'/pisca'} >
           Repita na ordem que pisca!
+        </RoutingButton>
+        <RoutingButton href={'/memorymirror'}>
+          Jogo da Memória!
         </RoutingButton>
       </div>
     </div>

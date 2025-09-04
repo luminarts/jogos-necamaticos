@@ -1,5 +1,5 @@
 "use client"
-import CountdownTimer from "@/app/client_components/countdownTimer";
+import CountdownTimer from "@/app/client_components/CountdownTimer";
 import TecladoButton from "../client_components/TecladoButton";
 import { useState, useEffect } from "react";
 
