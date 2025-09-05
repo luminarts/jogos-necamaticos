@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
   - colocar sempre multiplicação no primeiro depois da fase 10
 */
 
+// **********HELPER FUNCTIONS*************
 
 /**
  * Pega um número aleatório entre dois parametros definidos
@@ -21,7 +22,7 @@ function getRandomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateRandomEquation(terms, blanks) {
+function generateRandomEquation(terms, blanks, level) {
 
   // Variáveis, constantes e inicializações
   const operatorsArray = ['+', '-', '*'];
@@ -42,10 +43,13 @@ function generateRandomEquation(terms, blanks) {
     var num = getRandomInteger(2, 9);
     var op;
     var result = 0;
-
-    if (i <= 1) {
+    if (level > 15) {
+      op = operatorsArray[2];
+    } else if (i <= 1) {
+      console.log("entrou aqui 1");
       op = operatorsArray[getRandomInteger(0, 2)];
     } else {
+      console.log("entrou aqui 2");
       op = operatorsArray[getRandomInteger(0, 1)];
     }
     
@@ -104,8 +108,10 @@ function checkAnswer(equation) {
     }
   }
 
-  return Math.abs(expectedResult - userResult) <= 2;
+  return Math.abs(expectedResult - userResult) == 0;
 }
+
+// **********MAIN FUNCTION*************
 
 export default function Equacao() {
   // Variables and states
@@ -121,7 +127,7 @@ export default function Equacao() {
 
   const handleProblemStart = () => {
     setShowProblem(true);
-    [eq, blPos] = generateRandomEquation(terms, blanks); 
+    [eq, blPos] = generateRandomEquation(terms, blanks, level); 
     
     setBlanksPos(blPos);
     setEquation(eq);
@@ -147,7 +153,7 @@ export default function Equacao() {
 
   const handleClearPress = () => {
     var updatedEquation = [...equation];
-    for (var i = 0; i < blanks; i++) {
+    for (var i = 0; i < blanksPos.length; i++) {
       updatedEquation[blanksPos[i]] = '_';
     }
 
@@ -177,9 +183,12 @@ export default function Equacao() {
     if (level > 7) {
       blanks = 2;
     }
+    if (level > 12) {
+      blanks = 3;
+    }
     
     
-    [eq, blPos] = generateRandomEquation(terms, blanks); 
+    [eq, blPos] = generateRandomEquation(terms, blanks, level); 
     
     setBlanksPos(blPos);
     setEquation(eq);
