@@ -55,7 +55,7 @@ function generateRandomEquation(terms, blanks, level) {
     
     if (i == 2*terms) {
       equation[i - 1] = '=';
-
+https://classroom.google.com/c/Nzg5MDMwODkzNjQ4/m/NzAwNTU5NTMwNzA3/details
       // calculate result
       result = equation[0];
       for (var j = 1; j < equation.length - 2; j+=2) {
