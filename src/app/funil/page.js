@@ -1,62 +1,94 @@
 "use client"
-import { useState } from "react";
-import FunilButton from "../client_components/FunilButton";
+import { useState, useEffect } from "react";
+
+/* A ordem que tá sendo calculada e embaralhada aqui seria como se fossem os elementos em si do negócio mudando de posição ao passar pelo funil
+O que vai ser mostrado no display de opções vai ser as mudanças realizadas nos indexes desses elementos
+Ex:
+
+shuffle:
+ABCD          0123 (indexes originais)
+DBCA          3120 (o D mudou de index pra 0 e o A mudou de index pra 3)
+CABD          2310
+
+
+*/
+
+
+function shuffleArray(array) {
+  var currentIndex = array.length, randomIndex;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+}
+
+function generateShuffles(level) {
+  var shuffleList = [], floors, auxShuffle;
+  var initialOrder = [1, 2, 3, 4];
+
+  floors = level <= 3 ? 2 : (level <= 7 ? 3 : 4);
+  for (var i = 0; i < floors; i++) {
+    console.log("initialOrder: ", initialOrder);
+    auxShuffle = shuffleArray(initialOrder);
+    console.log("auxShuffle: ", auxShuffle);
+    shuffleList.push(auxShuffle);
+  }
+  return shuffleList;  
+}
+
+function calculateDisplayIndices(shuffleList) {
+  var displayIndices = [], aux = [];
+
+  for (var i = 1; i < shuffleList.length; i++) {
+    for (var j = 0; j < 4; j++) {
+      // vou pegar o elemento shuffleList[1][0] e procurar seu index no shuffleList[0]
+      aux.push(shuffleList[i - 1].indexOf(shuffleList[i][j]));
+    }
+    displayIndices.push(aux);
+    aux = [];
+  }
+
+  return displayIndices;
+}
 
 export default function Funil() {
 
-  /* Jogo: Funil
-  1 a 3: origem - buttons - final
-  4 a 7: origem - emb - buttons - final || origem - buttons - emb - final
-  8 a 10: origem - emb - emb - buttons - final || origem - buttons - emb - emb - final || origem - emb - buttons - emb - final
-  11 a 13: origem - buttons - emb - buttons - final
+  /* CONSERTAR:
+  
   */
 
-  /* 
-    Tenho que ter a resposta desde o início e depois incluir a resposta em um index aleatório de uma lista de 3 elementos (os botões)
+  /* gerar primeiros shuffles e calcular os display indices.
+    depois, useEffect para cada mudança de level gerar novos shuffles e calcular novos display indices
+  
   */
+  const [level, setLevel] = useState(1);
+  const [shuffleList, setShuffleList] = useState(() => generateShuffles(level));
+  const [displayShuffles, setDisplayShuffles] = useState(() => calculateDisplayIndices(shuffleList));
 
-  const [level, setLevel] = useState(0);
-  const [selected, setSelected] = useState(null);
+  // EFFECT HANDLES
 
+  useEffect(() => {
+    console.log('shuffleList: ', shuffleList);
+    console.log('displayShuffles: ', displayShuffles);
 
-  // FUNÇÕES AUXILIARES
-  function generateFunil() {
-    var embaralhosAux = [];
-    if (level <= 3) {
-      // Aqui não tem embaralhos
+  }, [shuffleList, displayShuffles])
 
+  // ACTION HANDLES 
 
-    } else if (level >=4 && level <= 7) {
-      // Aqui tem 1 embaralho
-
-    } else if (level >=8 && level <= 10) {
-      // Aqui tem 2 embaralhos
-
-    } else if (level >=8) {
-      // Aqui tem 1 embaralho
-    }
-  }
-
-  function toggleOtherOptions() {
-
+  const changeShuffleList = () => {
+    setLevel(level + 1);
+    setShuffleList(generateShuffles(level));
+    setDisplayShuffles(calculateDisplayIndices(shuffleList));
   }
 
   return(
     <div className="flex justify-center items-center">
       <div className="h-screen flex flex-col justify-center items-center">
-        <div className="flex flex-col justify-center items-center">
-          <p>Ordem inicial</p>
-          <p>Imagens</p>
-        </div>
-        <div className="flex flex-row">
-          <FunilButton>1</FunilButton>
-          <FunilButton>2</FunilButton>
-          <FunilButton>3</FunilButton>
-        </div>
-        <div className="flex flex-col justify-center items-center">
-          <p>Ordem final</p>
-          <p>Imagens</p>
-        </div>
+        <button onClick={changeShuffleList} className="border-2 p-2 hover:bg-black hover:text-white">bleh</button>
       </div>
     </div>
   );
