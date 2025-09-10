@@ -46,7 +46,7 @@ export default function CountdownTimer({className = "", onTimerStart, level}) {
   const seconds = timeLeft % 60;
 
   return(
-    <div className={className}>
+    <div className="flex flex-col justify-center items-center">
       <div className="text-3xl my-6">
         {timeLeft > 0 ? (<span>{minutes}:{seconds.toString().padStart(2, '0')}</span>) : (<span>Acabou o tempo!</span>)}
       </div>
