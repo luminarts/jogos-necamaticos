@@ -137,10 +137,10 @@ export default function Funil() {
             <Image src={imageFiles[shuffleList[0][3] - 1]} alt="cruz" width={50} height={50}></Image>
           </div>
           {((level > 5 && level <= 7) || (level > 9))  && <div className="border-2 p-2 bg-white text-black dark:bg-black dark:text-white">{displayShuffles[0]}</div>}
-          {level > 11 && level <= 13 && <div className="border-2 p-2 bg-white text-black dark:bg-black dark:text-white">{displayShuffles[1].map()}</div>}
+          {level > 11 && level <= 13 && <div className="border-2 p-2 bg-white text-black dark:bg-black dark:text-white">{displayShuffles[1].map(function(number) { return number + 1})}</div>}
           <ShuffleOptions answer={displayShuffles[answerIndex]} handleUserSelection={handleUserSelection} level={level}></ShuffleOptions>
-          {((level > 3 && level <= 5) || (level > 7)) && <div className="border-2 p-2 m-2 bg-white text-black dark:bg-black dark:text-white">{displayShuffles[1]}</div>}
-          {level > 7 && level <= 9 && <div className="border-2 p-2 m-2 bg-white text-black dark:bg-black dark:text-white">{displayShuffles[2]}</div>} 
+          {((level > 3 && level <= 5) || (level > 7)) && <div className="border-2 p-2 m-2 bg-white text-black dark:bg-black dark:text-white">{displayShuffles[1].map(function(number) { return number + 1})}</div>}
+          {level > 7 && level <= 9 && <div className="border-2 p-2 m-2 bg-white text-black dark:bg-black dark:text-white">{displayShuffles[2].map(function(number) { return number + 1})}</div>} 
           <div className="flex flex-row m-4 gap-4 bg-gray-600 p-3 rounded">
             <Image src={imageFiles[shuffleList[shuffleList.length - 1][0] - 1]} alt="circulo" width={50} height={50}></Image>
             <Image src={imageFiles[shuffleList[shuffleList.length - 1][1] - 1]} alt="quadrado" width={50} height={50}></Image>
